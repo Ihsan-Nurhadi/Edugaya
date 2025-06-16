@@ -2,4 +2,4 @@ django
 gunicorn
 whitenoise
 pillow
-embed_video
+django_embed_video
