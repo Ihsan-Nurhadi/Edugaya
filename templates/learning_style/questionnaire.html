@@ -1,0 +1,39 @@
+{% extends 'user_app/base.html' %}
+
+{% block body_block %}
+<div class="container mt-5">
+  <div class="card shadow">
+    <div class="card-header bg-primary text-white">
+      <h3>Test Modalitas Belajar Matematika</h3>
+    </div>
+    <div class="card-body">
+      <form method="post">
+        {% csrf_token %}
+
+        <div class="mb-3">
+          {{ form.student.label_tag }}  <!-- Mengganti form.name dengan form.student -->
+          {{ form.student }}
+          {% if form.student.errors %}
+            <div class="text-danger">{{ form.student.errors }}</div>
+          {% endif %}
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">{{ form.selected.label }}</label>
+          {% for checkbox in form.selected %}
+            <div class="form-check">
+              {{ checkbox.tag }}
+              <label class="form-check-label">{{ checkbox.choice_label }}</label>
+            </div>
+          {% endfor %}
+          {% if form.selected.errors %}
+            <div class="text-danger">{{ form.selected.errors }}</div>
+          {% endif %}
+        </div>
+
+        <button type="submit" class="btn btn-success">Identifikasi</button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

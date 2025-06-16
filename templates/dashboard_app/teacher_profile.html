@@ -1,0 +1,37 @@
+{% extends 'dashboard_app/base_dashboard_teacher.html' %}
+{% load static %}
+{% block head_block %}
+<link rel="stylesheet" href="{% static 'css/profile.css' %}">
+{% endblock %}
+{% block body_block %}
+
+<div class="component" style="background-color: #fff3e6;">
+    <div class="profile_pic">
+    <h1>Profil <span style="color: #F48C06;">Guru</span></h1>
+    {% if user_profile.profile_pic %}
+    <img src="{{ user_profile.profile_pic.url }}" alt="Profile Picture">
+    {% else %}
+    <p>No profile picture available.</p>
+    {% endif %}
+    </div>
+    <div class="details">
+    <p>Username: {{ user_profile.username }}</p>
+    <p>Email: {{ user_profile.email }}</p>
+    </div>
+    <a href="{% url 'user_app:update_teacherprofile' %}" class="btn btn-primary">Update</a>        
+</div>
+
+
+<div class="component" style="background-color: #fff3e6;">
+    <div class="profile_pic">
+    <h1>Iklan Promosi <span style="color: #F48C06;">Guru</span></h1>
+    </div>
+    <div class="details">
+    {% for iklan in iklan_list %}
+    <p>Judul Iklan : {{ iklan.judul_iklan }}</p>
+    <p>Deskripsi Iklan : {{ iklan.deskripsi_iklan }}</p>
+    {% endfor %}
+    </div>
+    <a href="#" class="btn btn-primary">Perbarui Iklan</a>        
+</div>
+{% endblock %}

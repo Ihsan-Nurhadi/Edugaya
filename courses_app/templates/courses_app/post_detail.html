@@ -1,0 +1,80 @@
+{% extends 'user_app/base.html' %}
+{% load static %}
+{% block head_block %}
+<link rel="stylesheet" href="{% static 'css/post_detail.css' %}">
+
+{% endblock %}
+{% load embed_video_tags %}
+{% block body_block %}
+<!-- Post title -->
+<div class="py-3" style="background:#FFBD73">
+    <div class="container">
+        <a class="text-breadcrumb" href="{% url 'index' %}" style="font-size: 20px; text-decoration: none !important;"> Dashboard /</a>
+        <a class="text-breadcrumb" href="{% url 'post_list' %}" style="font-size: 20px; text-decoration: none !important;"> Search /</a>
+        <a class="text-breadcrumb" href="#" style="font-size: 20px; text-decoration: none !important;"> {{ post.title }} </a>
+        <h1 class="post-title" >{{ post.title }}</h1>
+        <p class="post-content" style="font-size: 24px !important;">
+            {{ post.text|slice:":50"|safe|linebreaksbr }}
+            <p><strong>Gaya Belajar:</strong> {{ post.get_learning_style_display }}</p>
+
+        </p>
+    <!-- Post published date or publish button -->
+        {% if post.published_date %}
+        <div class="date post-date" style="font-size: 12px !important; margin-left: 5px !important;">Dibuat pada : {{ post.published_date }}</div>
+        {% else %}
+        <a class="btn btn-primary" href="{% url 'post_publish' pk=post.pk %}">Publish</a>
+        {% endif %}
+        <a href="{% url 'class_list' pk=post.pk %}" class="btn btn-primary">Lihat Kelas</a>
+    </div>
+</div>
+<br>
+<div class="item">
+    <!-- Video -->
+    {% if post.video %}
+    <!-- Card for Video -->
+    <div class="card mb-4">
+        <div class="card-body" style="height: 500px;">
+            <div class="embed-responsive embed-responsive-16by9">
+                <!-- Menampilkan video dengan ukuran responsif -->
+                {% video post.video "100% x 500" %}
+            </div>
+        </div>
+        <div class="card-footer text-muted">
+            <p class="deskripsi">Contoh Video Pembelajaran</p>
+        </div>
+    </div>
+    {% else %}
+    <div class="alert alert-warning" role="alert">
+        No video found for this post.
+    </div>
+    {% endif %}
+</div>
+
+<br>
+
+<div id="content">
+    <!-- Card for Course Content -->
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            <h3 class="title mb-0">Course content:</h3>
+        </div>
+        <div class="card-body">
+            <ul>
+                {% if classes %}
+                    {% for class in classes %}
+                        <li>
+                            <strong style="font-size: 16px;">{{ class.class_name }}</strong><br>
+                            <em style="font-size: 14px;">{{ class.text }}</em><br>
+                        </li>
+                    {% endfor %}
+                {% else %}
+                    <li>No classes available for this post.</li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
+

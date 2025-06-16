@@ -1,0 +1,73 @@
+{% extends 'dashboard_app/base_dashboard_teacher.html' %}
+{% load static %}
+{% block head_block %}
+<link rel="stylesheet" href="{% static 'css/kuisoner.css' %}">
+{% endblock %}
+{% block body_block %}
+<div class="py-3" style="background:#FFBD73">
+    <div class="container nav-jejak">
+      <a class="text-black" href="{% url 'user_app:dashboard' %}" style="font-size: 25px;"> Dashboard /</a>
+      <a class="text-black" href="#" style="font-size: 25px;"> Kuisoner</a>
+    </div>
+</div>
+
+<div class="item"> 
+<h2><strong >Kuisioner Learning Characteristics</strong></h2>
+
+  <!-- Form untuk menambah data baru -->
+  <h3>Add New Characteristic</h3>
+  <form method="POST" class="post-form" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary" name="add">Add Characteristic</button>
+  </form>
+
+  <hr>
+
+  <!-- Menampilkan daftar Learning Characteristics yang ada -->
+  <h3>Your Learning Characteristics</h3>
+  <ul>
+    {% for characteristic in characteristics %}
+      <li>
+        <strong>{{ characteristic.code }} - {{ characteristic.question }}</strong> <br>
+        <em>Category: {{ characteristic.category }} | Probability: {{ characteristic.probability }}</em> <br>
+
+        <!-- Tombol Edit -->
+        <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editModal{{ characteristic.id }}">Edit</button>
+
+        <!-- Modal Edit -->
+        <div class="modal fade" id="editModal{{ characteristic.id }}" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="editModalLabel">Edit Characteristic: {{ characteristic.code }}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <!-- Form Edit -->
+                <form method="POST">
+                  {% csrf_token %}
+                  <input type="hidden" name="characteristic_id" value="{{ characteristic.id }}">
+                  {{ form.as_p }}
+                  <button type="submit" class="btn btn-success" name="edit">Update Characteristic</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tombol Delete -->
+        <form method="POST" style="display:inline;">
+          {% csrf_token %}
+          <input type="hidden" name="characteristic_id" value="{{ characteristic.id }}">
+          <button type="submit" class="btn btn-danger btn-sm" name="delete">Delete</button>
+        </form>
+      </li>
+    {% empty %}
+      <li>No characteristics available.</li>
+    {% endfor %}
+  </ul>
+</div>
+{% endblock %}

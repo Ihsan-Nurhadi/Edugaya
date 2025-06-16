@@ -1,0 +1,26 @@
+{% extends 'user_app/base.html' %}
+
+{% block body_block %}
+<div class="container mt-5">
+  <div class="card shadow">
+    <div class="card-header bg-success text-white">
+      <h3>Hasil Identifikasi Gaya Belajar</h3>
+    </div>
+    <div class="card-body">
+      <p><strong>Nama:</strong> {{ name }}</p>
+      <p><strong>Gaya Belajar:</strong> <span class="text-primary">{{ result }}</span></p>
+
+      <h4>Perhitungan Naive Bayes:</h4>
+      <ul>
+        {% for category, posterior_value in category_posterior.items %}
+        <li><strong>{{ category }}:</strong> {{ posterior_value }}</li>
+        {% endfor %}
+      </ul>
+
+      <a href="{% url 'questionnaire' %}" class="btn btn-primary mt-3">Isi Kuis Lagi</a>
+      <a href="{% url 'post_list'%}" class="btn btn-secondary mt-3">Ke Materi</a>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
