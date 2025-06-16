@@ -31,8 +31,8 @@
     <header><img src="{% static 'img/EDUGAYA__1_-removebg-preview.png' %}" alt="Logo" width="150" height="auto"style="margin-left: 10px;" ></header>
         <ul>
             <li><a href="{% url 'user_app:dashboard' %}"><i class="fas fa-qrcode"></i>Dashboard</a></li>
-            <li><a href="#"><i class="fas fa-comment"></i>Kuisoner</a></li>
-            <li><a href="#"><i class="fas fa-chalkboard"></i></i>Materi</a></li>
+            <li><a href="{% url 'kuisoner' %}"><i class="fas fa-comment"></i>Kuisoner</a></li>
+            <li><a href="{% url 'post_new' %}"><i class="fas fa-chalkboard"></i></i>Materi</a></li>
             <li><br></li>
             <li><br></li>
             <li><a href="#"><i class="fas fa-user"></i>Teacher</a></li>
